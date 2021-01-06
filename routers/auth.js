@@ -3,6 +3,7 @@ const { toJWT, toData } = require('../auth/jwt')
 const bcrypt = require('bcrypt');
 const User = require("../models").user;
 const router = new Router()
+const authMiddleware = require("../auth/middleware");
 
 router.post('/login', async (req, res, next) => {
     const { email , password} = req.body
@@ -32,5 +33,14 @@ router.post('/login', async (req, res, next) => {
     res.json({token})
     }
 })
+
+router.get("/me", authMiddleware, async (req, res, next) => {
+    const user = req.user;
+    try {
+      res.send(user);
+    } catch (e) {
+      next(e);
+    }
+  });
 
 module.exports = router
