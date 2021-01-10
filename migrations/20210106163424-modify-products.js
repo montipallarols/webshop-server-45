@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.addColumn(
       "products",
       "price",
-      { type: Sequelize.INTEGER },
+      { type: Sequelize.FLOAT },
       {}
     );
   },
