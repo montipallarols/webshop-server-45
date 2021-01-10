@@ -15,4 +15,16 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:categoryId", async (req, res, next) => {
+  try {
+    const categoryId = parseInt(req.params.categoryId)
+    const filteredProducts = await Product.findAll({
+      where: {categoryId: categoryId}, include: [Category]
+    });
+    res.json({ filteredProducts });
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
